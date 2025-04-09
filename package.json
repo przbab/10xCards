@@ -1,0 +1,33 @@
+{
+    "name": "10xcards",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "prepare": "husky"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/przbab/10xCards.git"
+    },
+    "engines": {
+        "node": "22"
+    },
+    "lint-staged": {
+        "*.{js,ts,tsx}": [
+            "eslint --fix"
+        ],
+        "*.{json,graphql,md,mdx,scss,yml}": [
+            "prettier --write"
+        ]
+    },
+    "license": "UNLICENSED",
+    "homepage": "https://github.com/przbab/10xCards#readme",
+    "devDependencies": {
+        "@commitlint/cli": "19.8.0",
+        "@commitlint/config-conventional": "19.8.0",
+        "@schibsted/niche-eslint-config": "0.1.5",
+        "husky": "9.1.7",
+        "knip": "5.48.0",
+        "lint-staged": "15.5.0"
+    }
+}
