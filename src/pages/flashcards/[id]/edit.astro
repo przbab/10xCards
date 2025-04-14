@@ -1,0 +1,10 @@
+---
+import { FlashcardEdit } from '../../../components/FlashcardEdit';
+import Layout from '../../../layouts/Layout.astro';
+
+export const prerender = false;
+---
+
+<Layout>
+    <FlashcardEdit client:only="react" />
+</Layout>
