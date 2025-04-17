@@ -7,7 +7,7 @@ type AuthFormProps = {
     type: 'register' | 'login' | 'recover' | 'reset';
 };
 
-function AuthForm({ type }): React.FC<AuthFormProps> {
+function AuthForm({ type }: AuthFormProps): React.FC<AuthFormProps> {
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
 
@@ -15,20 +15,18 @@ function AuthForm({ type }): React.FC<AuthFormProps> {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-
-        if (type === 'register' && formData.password !== formData.confirmPassword) {
-            toast.error('Passwords do not match');
-            setLoading(false);
-
-            return;
+    const handleError = (error: unknown) => {
+        if (error instanceof Error) {
+            toast.error(error.message);
+        } else {
+            toast.error('An unexpected error occurred.');
         }
+    };
 
+    const handleAuthRequest = async (endpoint: string, data: Record<string, string>, onSuccess?: () => void) => {
         try {
-            const response = await fetch(`/api/auth/${type}`, {
-                body: JSON.stringify(formData),
+            const response = await fetch(`/api/auth/${endpoint}`, {
+                body: JSON.stringify(data),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
             });
@@ -38,20 +36,115 @@ function AuthForm({ type }): React.FC<AuthFormProps> {
                 throw new Error(errorData.error || 'Something went wrong');
             }
 
-            await response.json(); // Removed unused `data` assignment
-
-            toast.success(type === 'register' ? 'Account created successfully!' : 'Logged in successfully!');
-            if (type === 'login') {
-                window.location.href = '/flashcards';
-            }
+            toast.success(endpoint === 'register' ? 'Account created successfully!' : 'Logged in successfully!');
+            if (onSuccess) onSuccess();
         } catch (error: unknown) {
-            if (error instanceof Error) {
-                toast.error(error.message);
-            } else {
-                toast.error('An unexpected error occurred.');
-            }
+            handleError(error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleRegister = async () => {
+        if (formData.password !== formData.confirmPassword) {
+            toast.error('Passwords do not match');
+            setLoading(false);
+
+            return;
+        }
+
+        await handleAuthRequest('register', formData);
+    };
+
+    const handleLogin = async () => {
+        await handleAuthRequest('login', formData, () => {
+            window.location.href = '/flashcards';
+        });
+    };
+
+    const handleRecover = async () => {
+        try {
+            const response = await fetch(`/api/auth/recover`, {
+                body: JSON.stringify({ email: formData.email }),
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Something went wrong');
+            }
+
+            toast.success('Password reset email sent!');
+        } catch (error: unknown) {
+            handleError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleReset = async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('code');
+
+        if (!token) {
+            toast.error('Invalid or missing reset token');
+            setLoading(false);
+
+            return;
+        }
+
+        if (formData.newPassword !== formData.confirmNewPassword) {
+            toast.error('Passwords do not match');
+            setLoading(false);
+
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/auth/reset`, {
+                body: JSON.stringify({
+                    newPassword: formData.newPassword,
+                    token,
+                }),
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Something went wrong');
+            }
+
+            toast.success('Password reset successfully!');
+            window.location.href = '/auth/login';
+        } catch (error: unknown) {
+            handleError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+
+        switch (type) {
+            case 'login':
+                handleLogin();
+                break;
+            case 'recover':
+                handleRecover();
+                break;
+            case 'register':
+                handleRegister();
+                break;
+            case 'reset':
+                handleReset();
+                break;
+            default:
+                setLoading(false);
+                toast.error('Invalid form type');
         }
     };
 
