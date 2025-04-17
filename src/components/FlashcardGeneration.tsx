@@ -1,20 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import TextInput from './TextInput';
-import GeneratedCardsList from './GeneratedCardsList.tsx';
+import GeneratedCardsList from './GeneratedCardsList';
 import { type AIGeneratedCardsResponse } from '../types';
 import useGenerateCards from '../hooks/useGenerateCards';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-/**
- * FlashcardGeneration Component
- *
- * This is the main component for the Flashcard Generation View. It manages the state and logic
- * for generating flashcards using AI. It integrates the TextInput and GeneratedCardsList components.
- *
- * Features:
- * - Accepts user input to generate flashcards.
- * - Displays a list of generated flashcards.
- * - Handles user actions like accepting, editing, or rejecting flashcards.
- */
 const FlashcardGeneration: React.FC = () => {
     const [generatedCards, setGeneratedCards] = useState<AIGeneratedCardsResponse>([]);
     const { error, generateCards, isLoading } = useGenerateCards();
@@ -28,12 +18,10 @@ const FlashcardGeneration: React.FC = () => {
 
     const handleAction = useCallback((id: string, action: string) => {
         if (action === 'reject') {
-            console.log(`Card ${id} edited`);
-            // setGeneratedCards((prevCards) => prevCards.filter((_, index) => index.toString() !== id));
+            console.log(`Card ${id} rejected`);
         }
         if (action === 'accept') {
             console.log(`Card ${id} accepted`);
-            // Logic to accept the card can be implemented here
         }
     }, []);
 
@@ -41,14 +29,24 @@ const FlashcardGeneration: React.FC = () => {
         <div className="max-w-4xl mx-auto p-4 space-y-4">
             <TextInput isLoading={isLoading} onGenerate={handleGenerate} />
             {error && (
-                <div className="p-4 text-red-700 bg-red-100 border border-red-300 rounded-md">
-                    <p>Error: {error}</p>
-                </div>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Error</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-red-700">{error}</p>
+                    </CardContent>
+                </Card>
             )}
             {isLoading && (
-                <div className="p-4 text-blue-700 bg-blue-100 border border-blue-300 rounded-md">
-                    <p>Loading...</p>
-                </div>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Loading</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-blue-700">Please wait...</p>
+                    </CardContent>
+                </Card>
             )}
             <GeneratedCardsList cards={generatedCards} onAction={handleAction} />
         </div>

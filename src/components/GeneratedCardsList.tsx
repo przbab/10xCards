@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './Card.tsx';
+import Card from './Card';
 import { type AIGeneratedCardsResponse } from '../types';
 
 type GeneratedCardsListProps = {
@@ -13,8 +13,8 @@ const GeneratedCardsList: React.FC<GeneratedCardsListProps> = ({ cards, onAction
             {cards.map((card) => (
                 <Card
                     actions={[
-                        { color: 'green-500', id: 'accept', text: 'Accept' },
-                        { color: 'red-500', id: 'reject', text: 'Reject' },
+                        { id: 'accept', text: 'Accept', variant: 'default' },
+                        { id: 'reject', text: 'Reject', variant: 'destructive' },
                     ]}
                     back={card.back || 'No back text available'}
                     front={card.front}

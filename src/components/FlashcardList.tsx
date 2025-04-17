@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './Card.tsx';
+import Card from './Card';
 import useFetchCards from '../hooks/useFetchCards';
 
 const FlashcardList = () => {
@@ -22,8 +22,8 @@ const FlashcardList = () => {
                 {cards.map((card) => (
                     <Card
                         actions={[
-                            { color: 'yellow-500', id: 'edit', text: 'Edit' },
-                            { color: 'red-500', id: 'delete', text: 'Delete' },
+                            { id: 'edit', text: 'Edit', variant: 'default' },
+                            { id: 'delete', text: 'Delete', variant: 'destructive' },
                         ]}
                         back={card.back || 'No back text available'}
                         front={card.front}

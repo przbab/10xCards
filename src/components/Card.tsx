@@ -1,9 +1,11 @@
 import React, { memo } from 'react';
+import { CardContent, CardFooter, CardHeader, CardTitle, Card as ShadcnCard } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 type Action = {
-    color: string;
     id: string;
     text: string;
+    variant: 'destructive' | 'default' | 'secondary';
 };
 
 type CardProps = {
@@ -16,27 +18,21 @@ type CardProps = {
 
 const Card: React.FC<CardProps> = memo(({ actions, back, front, onAction }) => {
     return (
-        <div className="p-4 border border-gray-300 rounded-md shadow-sm">
-            <div className="mb-2">
-                <p className="font-bold">Front:</p>
-                <p>{front}</p>
-            </div>
-            <div className="mb-2">
-                <p className="font-bold">Back:</p>
-                <p>{back}</p>
-            </div>
-            <div className="flex space-x-2">
+        <ShadcnCard>
+            <CardHeader>
+                <CardTitle>{front}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <p className="mb-4">{back}</p>
+            </CardContent>
+            <CardFooter className="flex space-x-2">
                 {actions.map((action) => (
-                    <button
-                        className={`px-2 py-1 text-white rounded-md hover:opacity-90 bg-${action.color}`}
-                        key={action.id}
-                        onClick={() => onAction(action.id)}
-                    >
+                    <Button key={action.id} onClick={() => onAction(action.id)} variant={action.variant}>
                         {action.text}
-                    </button>
+                    </Button>
                 ))}
-            </div>
-        </div>
+            </CardFooter>
+        </ShadcnCard>
     );
 });
 

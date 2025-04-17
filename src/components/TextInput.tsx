@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 type TextInputProps = {
     isLoading: boolean;
@@ -7,7 +9,6 @@ type TextInputProps = {
 
 const TextInput: React.FC<TextInputProps> = ({ isLoading, onGenerate }) => {
     const [text, setText] = useState('');
-    console.log('🚀 ~ text:', text);
 
     const handleSubmit = () => {
         if (text.trim().length > 0) {
@@ -17,20 +18,16 @@ const TextInput: React.FC<TextInputProps> = ({ isLoading, onGenerate }) => {
 
     return (
         <div className="space-y-2">
-            <textarea
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <Textarea
+                className="w-full"
                 disabled={isLoading}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Enter text to generate flashcards"
                 value={text}
             />
-            <button
-                className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 disabled:bg-gray-300"
-                disabled={isLoading || text.trim().length === 0}
-                onClick={handleSubmit}
-            >
+            <Button disabled={isLoading || text.trim().length === 0} onClick={handleSubmit} variant="default">
                 {isLoading ? 'Generating...' : 'Generate'}
-            </button>
+            </Button>
         </div>
     );
 };

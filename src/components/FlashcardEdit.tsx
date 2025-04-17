@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { EditForm } from './EditForm';
 import { useFetchCard } from '../hooks/useFetchCard';
 import { useUpdateCard } from '../hooks/useUpdateCard';
@@ -23,7 +23,7 @@ export const FlashcardEdit: React.FC<{ id: string }> = ({ id }) => {
     if (error) return <p>Error loading card: {error.message}</p>;
 
     return (
-        <Card>
+        <Card className="max-w-xl mx-auto">
             <CardHeader>
                 <CardTitle>Edit Flashcard</CardTitle>
             </CardHeader>
