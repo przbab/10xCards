@@ -1,8 +1,9 @@
-import { nicheBase, nichePrettier } from '@schibsted/niche-eslint-config';
+import { nicheBase, nicheFront, nichePrettier } from '@schibsted/niche-eslint-config';
 import eslintPluginAstro from 'eslint-plugin-astro';
 
 export default [
     ...nicheBase,
+    ...nicheFront,
     ...eslintPluginAstro.configs['flat/recommended'],
     ...nichePrettier,
     {
@@ -30,6 +31,12 @@ export default [
                 'error',
                 {
                     astro: 'always',
+                },
+            ],
+            'import/no-unresolved': [
+                'error',
+                {
+                    ignore: ['astro:middleware'],
                 },
             ],
         },

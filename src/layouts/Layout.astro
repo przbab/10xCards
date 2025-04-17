@@ -1,17 +1,40 @@
 ---
 import '../styles/global.css';
+import { Toaster } from '@/components/ui/sonner';
+import { Button } from '@/components/ui/button';
 ---
 
-<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta content="width=device-width" name="viewport" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-        <meta content={Astro.generator} name="generator" />
-        <title>Astro Basics</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>10xCards</title>
     </head>
-    <body class="dark m-8">
-        <slot />
+    <body class="bg-gray-100">
+        <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+            <h1 class="text-lg font-bold">10xCards</h1>
+            <div>
+                {
+                    Astro.locals.user ? (
+                        <div class="flex items-center space-x-4">
+                            <span>Welcome, {Astro.locals.user.email}</span>
+                            <form action="/api/auth/logout" method="post">
+                                <Button type="submit" variant="destructive">
+                                    Logout
+                                </Button>
+                            </form>
+                        </div>
+                    ) : (
+                        <a href="/auth/login">
+                            <Button variant="primary">Login</Button>
+                        </a>
+                    )
+                }
+            </div>
+        </header>
+        <main class="m-8">
+            <slot />
+        </main>
+        <Toaster />
     </body>
 </html>
