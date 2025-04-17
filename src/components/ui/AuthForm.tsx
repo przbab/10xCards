@@ -18,6 +18,14 @@ function AuthForm({ type }): React.FC<AuthFormProps> {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+
+        if (type === 'register' && formData.password !== formData.confirmPassword) {
+            toast.error('Passwords do not match');
+            setLoading(false);
+
+            return;
+        }
+
         try {
             const response = await fetch(`/api/auth/${type}`, {
                 body: JSON.stringify(formData),
@@ -30,15 +38,18 @@ function AuthForm({ type }): React.FC<AuthFormProps> {
                 throw new Error(errorData.error || 'Something went wrong');
             }
 
-            const data = await response.json();
-            console.log('🚀 ~ handleSubmit ~ data:', data);
-            toast.success('Logged in successfully!');
+            await response.json(); // Removed unused `data` assignment
+
+            toast.success(type === 'register' ? 'Account created successfully!' : 'Logged in successfully!');
             if (type === 'login') {
-                toast.success('Welcome back!');
                 window.location.href = '/flashcards';
             }
-        } catch (error: any) {
-            toast.error(error.message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error('An unexpected error occurred.');
+            }
         } finally {
             setLoading(false);
         }
