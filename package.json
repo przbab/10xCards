@@ -32,6 +32,7 @@
     "license": "UNLICENSED",
     "homepage": "https://github.com/przbab/10xCards#readme",
     "dependencies": {
+        "@astrojs/node": "9.2.0",
         "@astrojs/react": "4.2.3",
         "@radix-ui/react-slot": "1.2.0",
         "@supabase/ssr": "0.6.1",
