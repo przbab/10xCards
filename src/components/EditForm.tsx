@@ -19,13 +19,14 @@ export function EditForm({ card, isSaving, onSave }: EditFormProps) {
     };
 
     return (
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" data-test-id="edit-form" onSubmit={handleSubmit}>
             <div>
                 <label className="block text-sm font-medium text-gray-700" htmlFor="front">
                     Front
                 </label>
                 <Input
                     className="mt-1 block w-full"
+                    data-test-id="front-input"
                     id="front"
                     maxLength={200}
                     onChange={(e) => setFront(e.target.value)}
@@ -40,13 +41,14 @@ export function EditForm({ card, isSaving, onSave }: EditFormProps) {
                 <Input
                     as="textarea"
                     className="mt-1 block w-full"
+                    data-test-id="back-input"
                     id="back"
                     maxLength={500}
                     onChange={(e) => setBack(e.target.value)}
                     value={back}
                 />
             </div>
-            <Button className="w-full" disabled={isSaving} type="submit">
+            <Button className="w-full" data-test-id="save-button" disabled={isSaving} type="submit">
                 {isSaving ? 'Saving...' : 'Save Changes'}
             </Button>
         </form>

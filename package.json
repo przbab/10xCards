@@ -6,6 +6,7 @@
         "astro": "astro",
         "build": "astro build",
         "dev": "astro dev",
+        "dev:e2e": "npm run astro dev -- --mode test",
         "lint": "eslint .",
         "prepare": "husky",
         "preview": "astro preview",

@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import TextInput from './TextInput';
 import GeneratedCardsList from './GeneratedCardsList';
-import { type Card } from '../types';
+import { type CardType } from '../types';
 import useGenerateCards from '../hooks/useGenerateCards';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 function FlashcardGeneration() {
-    const [generatedCards, setGeneratedCards] = useState<Card[]>([]);
+    const [generatedCards, setGeneratedCards] = useState<CardType[]>([]);
     const { error, generateCards, isLoading } = useGenerateCards();
 
     const handleGenerate = async (text: string) => {

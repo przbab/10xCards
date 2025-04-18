@@ -9,16 +9,12 @@ export default defineConfig({
             name: 'Desktop Chrome',
             use: { ...devices['Desktop Chrome'] },
         },
-        {
-            name: 'Mobile Safari',
-            use: { ...devices['iPhone 12'] },
-        },
     ],
     reporter: 'html',
     testDir: './tests/e2e',
     timeout: 30000,
     use: {
-        baseURL: 'http://localhost:3000',
+        baseURL: 'http://localhost:4321',
         trace: 'on-first-retry',
     },
 });

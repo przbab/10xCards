@@ -3,6 +3,7 @@ import { CardContent, CardFooter, CardHeader, CardTitle, Card as ShadcnCard } fr
 import { Button } from '@/components/ui/button';
 
 type Action = {
+    'data-test-id'?: string; // Added support for data-test-id
     id: string;
     text: string;
     variant: 'destructive' | 'default' | 'secondary';
@@ -27,7 +28,12 @@ const Card: React.FC<CardProps> = memo(({ actions, back, front, onAction }) => {
             </CardContent>
             <CardFooter className="flex space-x-2">
                 {actions.map((action) => (
-                    <Button key={action.id} onClick={() => onAction(action.id)} variant={action.variant}>
+                    <Button
+                        data-test-id={action['data-test-id']} // Added support for data-test-id
+                        key={action.id}
+                        onClick={() => onAction(action.id)}
+                        variant={action.variant}
+                    >
                         {action.text}
                     </Button>
                 ))}

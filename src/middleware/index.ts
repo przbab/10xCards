@@ -26,6 +26,13 @@ export const onRequest = defineMiddleware(async ({ cookies, locals, redirect, re
         headers: request.headers,
     });
 
+    if (import.meta.env.MODE === 'test') {
+        locals.user = { ...locals.user, email: 'user@example.com', id: import.meta.env.TEST_USER_ID };
+        locals.supabase = supabase;
+
+        return next();
+    }
+
     // Get user session
     const {
         data: { user },

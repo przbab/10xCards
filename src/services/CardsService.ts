@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { type AIGeneratedCardsResponse, type Card } from '../types';
+import { type AIGeneratedCardsResponse, type CardType } from '../types';
 
 export const generateCardsSchema = z.object({
     text: z.string().min(500, 'Text too short').max(10000, 'Text exceeds maximum length of 10000 characters'),
@@ -8,7 +8,7 @@ export const generateCardsSchema = z.object({
 export class CardsService {
     static async addCard(
         supabase,
-        card: Card,
+        card: CardType,
         user
     ): Promise<{
         back: string;
@@ -90,7 +90,7 @@ export class CardsService {
         }
     }
 
-    static async getCard(supabase, id: string, user): Promise<Card> {
+    static async getCard(supabase, id: string, user): Promise<CardType> {
         const { data, error } = await supabase.from('cards').select('*').eq('user_id', user.id).eq('id', id).single();
 
         if (error) {

@@ -29,4 +29,4 @@ export type DeleteCardsCommand = {
     card_ids: string[];
 };
 
-export type Card = { back: string; front: string; id: string; source: 'ai-full' | 'ai-edited' | 'manual' };
+export type CardType = { back: string; front: string; id: string; source: 'ai-full' | 'ai-edited' | 'manual' };

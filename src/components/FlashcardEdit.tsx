@@ -23,7 +23,7 @@ export function FlashcardEdit({ id }: { id: string }) {
     if (error) return <p>Error loading card: {error.message}</p>;
 
     return (
-        <Card className="max-w-xl mx-auto">
+        <Card className="max-w-xl mx-auto" data-test-id="flashcard-edit">
             <CardHeader>
                 <CardTitle>Edit Flashcard</CardTitle>
             </CardHeader>
