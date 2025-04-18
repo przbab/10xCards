@@ -1,0 +1,29 @@
+name: PR
+
+on:
+    workflow_dispatch:
+    pull_request:
+
+jobs:
+    validate_pr_title:
+        runs-on: ubuntu-latest
+        name: Validate PR title
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set correct node version
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+            - name: Install commitlint
+              run: npm install -g @commitlint/cli @commitlint/config-conventional
+              shell: bash
+            - name: Validate PR title
+              env:
+                  PR_TITLE: ${{ github.event.pull_request.title }}
+              run: echo "$PR_TITLE" | npx commitlint
+              shell: bash
+
+    validate:
+        name: Validate
+        uses: ./.github/workflows/validate.yml
+        secrets: inherit
