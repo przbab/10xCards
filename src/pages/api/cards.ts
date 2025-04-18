@@ -1,22 +1,15 @@
-import { AICardsService } from '../../services/AICardsService';
+import { CardsService } from '../../services/CardsService';
 import { type APIRoute } from 'astro';
 
 export const prerender = false;
 
 export const GET: APIRoute = async ({ locals }) => {
     try {
-        // Ensure the user is authenticated
-        // const supabase = locals.supabase;
-        // const { data: user } = await supabase.auth.getUser();
-        // if (!user) {
-        //     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        //         headers: { 'Content-Type': 'application/json' },
-        //         status: 401,
-        //     });
-        // }
+        const user = locals.user;
+        const supabase = locals.supabase;
 
         // Fetch cards from the service
-        const cards = await AICardsService.getCards();
+        const cards = await CardsService.getCards(supabase, user);
 
         // Return the fetched cards
         return new Response(JSON.stringify(cards), {
@@ -33,28 +26,21 @@ export const GET: APIRoute = async ({ locals }) => {
     }
 };
 
-export const PUT: APIRoute = async ({ locals, request }) => {
+export const POST: APIRoute = async ({ locals, request }) => {
     try {
-        // Ensure the user is authenticated
-        // const supabase = locals.supabase;
-        // const { data: user } = await supabase.auth.getUser();
-        // if (!user) {
-        //     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        //         headers: { 'Content-Type': 'application/json' },
-        //         status: 401,
-        //     });
-        // }
+        const user = locals.user;
+        const supabase = locals.supabase;
 
         // Parse and validate the request body
         const body = await request.json();
 
-        // Update cards using the service
-        const updatedCard = await AICardsService.updateCard(body);
+        // Add a new card using the service
+        const newCard = await CardsService.addCard(supabase, body, user);
 
-        // Return the updated cards
-        return new Response(JSON.stringify(updatedCard), {
+        // Return the newly added card
+        return new Response(JSON.stringify(newCard), {
             headers: { 'Content-Type': 'application/json' },
-            status: 200,
+            status: 201,
         });
     } catch (error) {
         console.error('Error in /ai/cards endpoint:', error);

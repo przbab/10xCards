@@ -36,7 +36,7 @@ export default [
             'import/no-unresolved': [
                 'error',
                 {
-                    ignore: ['astro:middleware'],
+                    ignore: ['astro:middleware', 'astro:transitions/client'],
                 },
             ],
             'jsx-a11y/label-has-associated-control': 'off',

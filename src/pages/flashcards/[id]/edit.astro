@@ -2,9 +2,11 @@
 import { FlashcardEdit } from '../../../components/FlashcardEdit';
 import Layout from '../../../layouts/Layout.astro';
 
+const { id } = Astro.params;
+
 export const prerender = false;
 ---
 
 <Layout>
-    <FlashcardEdit client:only="react" />
+    <FlashcardEdit client:only="react" id={id} />
 </Layout>

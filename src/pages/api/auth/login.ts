@@ -1,6 +1,8 @@
 import { type APIRoute } from 'astro';
 import { createSupabaseServerInstance } from '../../../db/supabase.client';
 
+export const prerender = false;
+
 export const POST: APIRoute = async ({ cookies, request }) => {
     const { email, password } = await request.json();
 

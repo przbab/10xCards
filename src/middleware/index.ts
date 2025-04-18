@@ -33,6 +33,7 @@ export const onRequest = defineMiddleware(async ({ cookies, locals, redirect, re
 
     if (user) {
         locals.user = { ...locals.user, email: user.email, id: user.id };
+        locals.supabase = supabase;
     } else {
         // Redirect to login for protected routes
         return redirect('/auth/login');

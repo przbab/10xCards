@@ -1,21 +1,11 @@
-import { AICardsService, generateCardsSchema } from '../../../services/AICardsService';
+import { CardsService, generateCardsSchema } from '../../../services/CardsService';
 import { z } from 'zod';
 import { type APIRoute } from 'astro';
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ locals, request }) => {
+export const POST: APIRoute = async ({ request }) => {
     try {
-        // Ensure the user is authenticated
-        // const supabase = locals.supabase;
-        // const { data: user } = await supabase.auth.getUser();
-        // if (!user) {
-        //     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        //         headers: { 'Content-Type': 'application/json' },
-        //         status: 401,
-        //     });
-        // }
-
         // Parse and validate the request body
         const body = await request.json();
         const parsed = generateCardsSchema.parse(body);
@@ -25,7 +15,7 @@ export const POST: APIRoute = async ({ locals, request }) => {
         // const timeout = setTimeout(() => controller.abort(), 5000); // 5 seconds timeout
 
         try {
-            const cards = await AICardsService.generateCards(parsed.text, { signal: controller.signal });
+            const cards = await CardsService.generateCards(parsed.text, { signal: controller.signal });
             // clearTimeout(timeout);
 
             // Return the generated cards

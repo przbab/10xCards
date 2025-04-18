@@ -1,15 +1,32 @@
 import React from 'react';
 import Card from './Card';
 import useFetchCards from '../hooks/useFetchCards';
+import { navigate } from 'astro:transitions/client';
 
 function FlashcardList() {
     const { cards, error, loading } = useFetchCards(); // Fetch cards using the custom hook
 
     const handleAction = (id: string, actionId: string) => {
         if (actionId === 'edit') {
-            console.log(`Card ${id} edited`);
+            navigate(`/flashcards/${id}/edit`);
         } else if (actionId === 'delete') {
-            console.log(`Card ${id} deleted`);
+            // Handle delete action
+            fetch(`/api/cards/${id}`, {
+                method: 'DELETE',
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete card');
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    // Optionally, refresh the card list or show a success message
+                    window.location.reload();
+                })
+                .catch((e) => {
+                    console.error('Error deleting card:', e);
+                });
         }
     };
 

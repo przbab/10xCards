@@ -1,0 +1,32 @@
+---
+import '../styles/global.css';
+import { Button } from '@/components/ui/button';
+---
+
+<header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <h1 class="text-lg font-bold">10xCards</h1>
+    <nav>
+        <ul class="flex space-x-4">
+            <li><a href="/flashcards">Flashcards</a></li>
+            <li><a href="/generate">Generate</a></li>
+        </ul>
+    </nav>
+    <div>
+        {
+            Astro.locals.user ? (
+                <div class="flex items-center space-x-4">
+                    <span>Welcome, {Astro.locals.user.email}</span>
+                    <form action="/api/auth/logout" method="post">
+                        <Button type="submit" variant="destructive">
+                            Logout
+                        </Button>
+                    </form>
+                </div>
+            ) : (
+                <a href="/auth/login">
+                    <Button variant="primary">Login</Button>
+                </a>
+            )
+        }
+    </div>
+</header>

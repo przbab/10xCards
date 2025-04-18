@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import TextInput from './TextInput';
 import GeneratedCardsList from './GeneratedCardsList';
-import { type AIGeneratedCardsResponse } from '../types';
+import { type Card } from '../types';
 import useGenerateCards from '../hooks/useGenerateCards';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 function FlashcardGeneration() {
-    const [generatedCards, setGeneratedCards] = useState<AIGeneratedCardsResponse>([]);
+    const [generatedCards, setGeneratedCards] = useState<Card[]>([]);
     const { error, generateCards, isLoading } = useGenerateCards();
 
     const handleGenerate = async (text: string) => {
@@ -16,14 +16,34 @@ function FlashcardGeneration() {
         }
     };
 
-    const handleAction = useCallback((id: string, action: string) => {
-        if (action === 'reject') {
-            console.log(`Card ${id} rejected`);
-        }
-        if (action === 'accept') {
-            console.log(`Card ${id} accepted`);
-        }
-    }, []);
+    const handleAction = useCallback(
+        (id: string, action: string) => {
+            if (action === 'reject') {
+                setGeneratedCards((prevCards) => prevCards.filter((card) => card.id !== id));
+            }
+            if (action === 'accept') {
+                const card = generatedCards.find((c) => c.id === id);
+                fetch('/api/cards', {
+                    body: JSON.stringify({ back: card.back, front: card.front, source: card.source }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'POST',
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Failed to accept the card');
+                        }
+                        console.log(`Card ${id} accepted`);
+                        setGeneratedCards((prevCards) => prevCards.filter((c) => c.id !== id));
+                    })
+                    .catch((e) => {
+                        console.error('Error accepting card:', e);
+                    });
+            }
+        },
+        [generatedCards]
+    );
 
     return (
         <div className="max-w-4xl mx-auto p-4 space-y-4">

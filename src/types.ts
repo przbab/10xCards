@@ -29,8 +29,4 @@ export type DeleteCardsCommand = {
     card_ids: string[];
 };
 
-export type AIGeneratedCardsResponse = {
-    back: string;
-    front: string;
-    id: string;
-}[];
+export type Card = { back: string; front: string; id: string; source: 'ai-full' | 'ai-edited' | 'manual' };
