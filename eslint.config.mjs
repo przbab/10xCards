@@ -23,7 +23,16 @@ export default [
         },
     },
     {
-        ignores: ['dist', 'node_modules', '.astro', 'src/env.d.ts'],
+        ignores: [
+            'node_modules',
+            '.astro',
+            'src/env.d.ts',
+            '.ai/**',
+            '*.env',
+            '.env.test',
+            'playwright-report/**',
+            'test-results/**',
+        ],
     },
     {
         rules: {
