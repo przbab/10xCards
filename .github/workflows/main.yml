@@ -1,0 +1,23 @@
+name: CI Pipeline
+
+on:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+
+    jobs:
+        validate:
+            name: Validate
+            uses: ./.github/workflows/validate.yml
+            secrets: inherit
+        build:
+            name: Build application
+            timeout-minutes: 15
+            runs-on: ubuntu-latest
+            needs: test
+            steps:
+                - uses: actions/checkout@v4
+                - uses: ./.github/actions/setup
+                - name: Build production version
+                  run: npm run build

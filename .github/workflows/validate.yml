@@ -1,0 +1,24 @@
+name: Validate
+
+on:
+    workflow_call:
+
+jobs:
+    linters:
+        name: Run linters
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/setup
+            - name: Lint
+              run: npm run lint
+    tests:
+        name: Run tests
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/setup
+            - name: Tests
+              run: npm run test:unit
