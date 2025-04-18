@@ -9,7 +9,7 @@ interface EditFormProps {
     onSave: (updatedCard: CardRow) => void;
 }
 
-export const EditForm: React.FC<EditFormProps> = ({ card, isSaving, onSave }) => {
+export function EditForm({ card, isSaving, onSave }: EditFormProps) {
     const [front, setFront] = useState(card.front);
     const [back, setBack] = useState(card.back);
 
@@ -51,4 +51,4 @@ export const EditForm: React.FC<EditFormProps> = ({ card, isSaving, onSave }) =>
             </Button>
         </form>
     );
-};
+}

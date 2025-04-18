@@ -75,3 +75,10 @@
 - `npm run lint`: Run ESLint for code quality checks.
 - `npm run prepare`: Prepare Husky for Git hooks.
 - `npm run preview`: Preview the production build.
+
+---
+
+### Testing
+
+- **Unit Testing**: Vitest is used for writing and running unit tests, ensuring individual components and functions work as expected.
+- **End-to-End Testing (E2E)**: Playwright is utilized for comprehensive E2E testing, simulating real user interactions across the application.

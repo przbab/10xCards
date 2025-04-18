@@ -6,7 +6,7 @@ import { type CardRow } from '../types';
 import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
-export const FlashcardEdit: React.FC<{ id: string }> = ({ id }) => {
+export function FlashcardEdit({ id }: { id: string }) {
     const { card, error, isLoading } = useFetchCard(id);
     const { isUpdating, updateCard } = useUpdateCard();
 
@@ -30,4 +30,4 @@ export const FlashcardEdit: React.FC<{ id: string }> = ({ id }) => {
             <CardContent>{card && <EditForm card={card} isSaving={isUpdating} onSave={handleSave} />}</CardContent>
         </Card>
     );
-};
+}

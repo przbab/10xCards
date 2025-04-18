@@ -7,7 +7,7 @@ type TextInputProps = {
     onGenerate: (text: string) => void;
 };
 
-const TextInput: React.FC<TextInputProps> = ({ isLoading, onGenerate }) => {
+function TextInput({ isLoading, onGenerate }: TextInputProps) {
     const [text, setText] = useState('');
 
     const handleSubmit = () => {
@@ -30,6 +30,6 @@ const TextInput: React.FC<TextInputProps> = ({ isLoading, onGenerate }) => {
             </Button>
         </div>
     );
-};
+}
 
 export default TextInput;

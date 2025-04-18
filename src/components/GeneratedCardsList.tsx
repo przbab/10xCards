@@ -7,7 +7,7 @@ type GeneratedCardsListProps = {
     onAction: (id: string, actionId: string) => void;
 };
 
-const GeneratedCardsList: React.FC<GeneratedCardsListProps> = ({ cards, onAction }) => {
+function GeneratedCardsList({ cards, onAction }: GeneratedCardsListProps) {
     return (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {cards.map((card) => (
@@ -25,6 +25,6 @@ const GeneratedCardsList: React.FC<GeneratedCardsListProps> = ({ cards, onAction
             ))}
         </div>
     );
-};
+}
 
 export default GeneratedCardsList;

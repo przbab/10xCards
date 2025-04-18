@@ -2,7 +2,7 @@ import React from 'react';
 import Card from './Card';
 import useFetchCards from '../hooks/useFetchCards';
 
-const FlashcardList = () => {
+function FlashcardList() {
     const { cards, error, loading } = useFetchCards(); // Fetch cards using the custom hook
 
     const handleAction = (id: string, actionId: string) => {
@@ -35,6 +35,6 @@ const FlashcardList = () => {
             </div>
         </div>
     );
-};
+}
 
 export default FlashcardList;

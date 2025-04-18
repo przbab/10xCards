@@ -2,6 +2,20 @@
 
 {{project-description}}
 
+## Project Structure
+
+- `./src` - source code
+- `./src/assets` - assets for the project
+- `./src/components/ui` - shadcn/ui components, do not modify
+- `./src/components` - reusable components
+- `./src/constants` - configuration for part of the project
+- `./src/contexts` - react contexts
+- `./src/hooks` - react hooks
+- `./src/pages` - Astro pages
+- `./src/server` - server-side code
+- `./src/services` - service functions for API calls and tracking
+- `./src/styles` - global styles
+
 ## FRONTEND
 
 ### Guidelines for REACT

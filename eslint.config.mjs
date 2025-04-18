@@ -39,6 +39,7 @@ export default [
                     ignore: ['astro:middleware'],
                 },
             ],
+            'jsx-a11y/label-has-associated-control': 'off',
         },
     },
 ];

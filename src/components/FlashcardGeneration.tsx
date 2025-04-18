@@ -5,7 +5,7 @@ import { type AIGeneratedCardsResponse } from '../types';
 import useGenerateCards from '../hooks/useGenerateCards';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const FlashcardGeneration: React.FC = () => {
+function FlashcardGeneration() {
     const [generatedCards, setGeneratedCards] = useState<AIGeneratedCardsResponse>([]);
     const { error, generateCards, isLoading } = useGenerateCards();
 
@@ -51,6 +51,6 @@ const FlashcardGeneration: React.FC = () => {
             <GeneratedCardsList cards={generatedCards} onAction={handleAction} />
         </div>
     );
-};
+}
 
 export default FlashcardGeneration;
