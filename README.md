@@ -1,5 +1,7 @@
 # 10xCards
 
+:warning: This project was in most part developed by AI. My rule was that if I had to write more than 1 line of code then I should make AI do it. As you can imagine I got fed up quickly :sweat_smile:. As a result this app is not great :sweat_smile: but was a great learning experience, by no means I plan to release it anywhere. I started with a shaky understanding what I actually want to build and cut the scope a bit in the process.
+
 ## Project Description
 
 10xCards is a web application designed to streamline the creation of high-quality educational flashcards. It leverages artificial intelligence to automate flashcard generation while also providing tools for manual creation. Users can manage their flashcards through features like review, editing, and deletion, and integrate them with a spaced repetition algorithm for effective learning.
